@@ -63,19 +63,39 @@ def generate_image(params: str) -> dict:
         return {"error": str(e)}
 
 # WebSocket server
-async def handle_websocket(websocket, path):
+async def handle_websocket(websocket, path=None):
     logger.info("WebSocket client connected")
     try:
         async for message in websocket:
-            request = json.loads(message)
+            try:
+                request = json.loads(message)
+            except Exception as e:
+                await websocket.send(json.dumps({"error": "invalid json", "detail": str(e)}))
+                continue
+
             logger.info(f"Received message: {request}")
-            if request.get("tool") == "generate_image":
-                result = generate_image(request.get("params", ""))
+
+            tool = request.get("tool")
+            if tool == "generate_image":
+                params = request.get("params", {})
+                # 支援 params 是 dict 或 JSON 字串
+                if isinstance(params, dict):
+                    params_str = json.dumps(params)
+                else:
+                    params_str = params or "{}"
+
+                result = generate_image(params_str)
                 await websocket.send(json.dumps(result))
             else:
                 await websocket.send(json.dumps({"error": "Unknown tool"}))
-    except websockets.ConnectionClosed:
-        logger.info("WebSocket client disconnected")
+    except websockets.ConnectionClosed as e:
+        logger.info(f"WebSocket client disconnected: {e.code} {e.reason}")
+    except Exception as e:
+        logger.exception("Handler error")
+        try:
+            await websocket.send(json.dumps({"error": str(e)}))
+        except Exception:
+            pass
 
 # Main server loop
 async def main():
