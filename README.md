@@ -35,6 +35,10 @@ This project enables AI agents to send image generation requests to ComfyUI usin
 - Place API-format workflow files (e.g., `basic_api_test.json`) in the `workflows/` directory.
 - Export workflows from ComfyUI’s UI with “Save (API Format)” (enable dev mode in settings).
 
+5. **Prepare models**:
+- Place model files into \AI Playground\resources\ComfyUI\models\checkpoints
+- Default test script will use v1-5-pruned-emaonly.safetensors.
+
 ## Usage
 
 1. **Run the MCP Server**:
@@ -45,7 +49,7 @@ This project enables AI agents to send image generation requests to ComfyUI usin
 2. **Test with the Client**:
    python client.py
 
-- Sends a sample request: `"a dog wearing sunglasses"` with `512x512` using `sd_xl_base_1.0.safetensors`.
+- Sends a sample request: `"a dog wearing sunglasses"` with `512x512` using `v1-5-pruned-emaonly.safetensors`.
 - Output example:
   ```
   Response from server:
@@ -63,7 +67,7 @@ This project enables AI agents to send image generation requests to ComfyUI usin
       "width": 768,
       "height": 768,
       "workflow_id": "basic_api_test",
-      "model": "v1-5-pruned-emaonly.ckpt"
+      "model": "v1-5-pruned-emaonly.safetensors"
   })
   ```
 
