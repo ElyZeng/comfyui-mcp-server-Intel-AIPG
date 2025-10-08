@@ -9,7 +9,7 @@ payload = {
         "width": 512,
         "height": 512,
         "workflow_id": "basic_api_test",
-        "model": "v1-5-pruned-emaonly.ckpt"  # No extra quote
+        "model": "v1-5-pruned-emaonly.safetensors"  # No extra quote
     })
 }
 
