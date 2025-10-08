@@ -27,12 +27,9 @@ This project enables AI agents to send image generation requests to ComfyUI usin
 
 
 3. **Start ComfyUI**:
-- Install ComfyUI (see [ComfyUI docs](https://github.com/comfyanonymous/ComfyUI)).
-- Run it on port 8188:
-  ```
-  cd <ComfyUI_dir>
-  python main.py --port 8188
-  ```
+- Install Intel AI playground(AIPG) and select ComfyUI backend to install along with it.
+- Lauch the AIPG after finished the isntallation.
+- After initiation, check localhost:49000 to see if ComfyUI also initialized.
 
 4. **Prepare Workflows**:
 - Place API-format workflow files (e.g., `basic_api_test.json`) in the `workflows/` directory.
